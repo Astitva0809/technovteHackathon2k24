@@ -1,72 +1,122 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiResponse } from "../utils/ApiResonse.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import {uploadFileOnCloudinary} from '../utils/cloudinary.js';
 import { Property } from "../models/property.model.js";
 
 const createProperty = asyncHandler(async(req,res)=>{
     
-    const {name, description, price, stock, category, address, status} = req.body;
+    const { title, description, location, price, bedrooms, bathrooms, area, amenities, contact, owner } = req.body;
+
     const {user} = req;
 
-    const propertyImgLocalPath = req.files?.productImage[0]?.path;
+    if (!title || !description || !location || !amenities || !price || !bedrooms || !bathrooms || !area || !contact || !owner) {
+        return res.status(400).json(new ApiError(400, "All fields are required!!"));
+    }
     
-    const propertyImage = await uploadFileOnCloudinary(propertyImgLocalPath);
+    const VRImgLocalPath = req.files?.VRmage[0]?.path;
+    const imagesLocalPath = req.files?.images[0]?.path;
+    
+    const VRImage = await uploadFileOnCloudinary(VRImgLocalPath);
+    const images = await uploadFileOnCloudinary(imagesLocalPath);
 
-    if(!propertyImage){
-        throw new ApiError(400, "Avatar file is required!!");
+    if(!VRImage){
+        return res
+        .status(400)
+        .json(
+            new ApiError(400, "VRImage file is required!!")
+        );
     }
 
     const property = await Property.create({
         title, 
         description,
-        productImage: productImage.url,
+        VRImage: VRImage.url,
         price,
-        category,
-        address,
-        status,
+        location,
+        area,
+        bedrooms,
+        images: images.url,
+        bathrooms,
+        amenities,
+        contact,
         owner: user._id
     })
-    res.status(200).json(new ApiResponse(201, property, "product is added!!"))
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(201, property, "property is added!!")
+    )
 })
 
 const getProperties = asyncHandler(async(req,res)=>{
-    const products = await Property.find();
+    const properties = await Property.find();
 
-    if(!products){
-        throw new ApiError(404, 'Properties not found!!')
+    if(!properties){
+        return res
+        .status(404)
+        .json(
+            new ApiError(404, 'Properties not found!!')
+        )
     }
 
-    req.status(200).json(new ApiResponse(200, products, 'Properties found')) 
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, properties, 'Properties found')
+    ) 
 })
 
 const getPropertyById = asyncHandler(async(req,res)=>{
 
-    const product = await Property.findById(req.params.id);
+    const property = await Property.findById(req.params.id);
 
-    if(!product){
-        throw new ApiError(404, 'Property not found!!')
+    if(!property){
+        return res
+        .status(404).json(
+            new ApiError(404, 'Property not found!!')
+        );
     }
 
-    req.status(200).json(new ApiResponse(200, product, 'Property found')) 
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, property, 'Property found')
+    ) 
 })
 
 const updatePropertyById = asyncHandler(async(req,res)=>{
     const { id } = req.params;
     const property = await Property.findByIdAndUpdate(id, req.body, { new: true });
     if (!property) {
-        throw new ApiError(404, 'Property not found');
+        return res
+        .status(404)
+        .json(
+            new ApiError(404, 'Property not found')
+        )
     }
-    res.status(200).json(new ApiResponse( 200, product, "Property updated successfully!!"));
+    return res
+    .status(200)
+    .json(
+        new ApiResponse( 200, property, "Property updated successfully!!")
+    );
 })
 
 const deletePropertyById = asyncHandler(async(req,res)=>{
     const { id } = req.params;
     const property = await Property.findByIdAndDelete(id);
     if (!property) {
-        throw new ApiError(404, 'Property not found');
+        return res
+        .status(404)
+        .json(
+            new ApiError(404, 'Property not found')
+        )
     }
-    res.status(200).json(new ApiResponse(200, product, 'Property deleted successfully!!'));
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, property, 'Property deleted successfully!!')
+    );
 })
 
 

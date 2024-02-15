@@ -1,18 +1,29 @@
 import { Router } from "express";
-import { registerUser, logInUser, logOutUser, currentUser } from "../controllers/user.controller.js";
+import { createProperty, getProperties, getPropertyById, updatePropertyById, deletePropertyById } from "../controllers/property.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
 
-//Register
-router.route("/register").post(registerUser)
+router.use(verifyJWT);
 
-//login
-router.route("/login").post(logInUser)
+router.route("/create").post(
+    upload.fields([
+        {
+            name: "VRImage",
+            maxCount: 1
+        },
+        {
+            name: "images",
+            maxCount: 1
+        }
+    ]),
+    createProperty)
 
-//logout
-router.route("/logout").post(verifyJWT, logOutUser)
+router.route("/getProperties").get(getProperties)
 
-//curentUser
-router.route("/user").post(verifyJWT,currentUser);
+router.route("/getProperty").get(getPropertyById);
+
+router.route("/update").get(updatePropertyById);
+
+router.route("/delete").delete(deletePropertyById);
 
 export default router;
