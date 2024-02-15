@@ -13,16 +13,12 @@ const propertySchema = new Schema({
         type:String,
         required: true
     },
-    images: {
-        type: String,
-        required: true
-    },
     price: {
         type: Number,
         required: true
     },
     size: {
-        type: String,
+        type: Number,
         required: true
     },
     VRImage: {

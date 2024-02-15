@@ -7,7 +7,7 @@ import { Property } from "../models/property.model.js";
 
 const addProperty = asyncHandler(async(req,res)=>{
     
-    const { title, description, location, price, area, amenities, contact, owner, size, type} = req.body;
+    const { title, description, location, price, area, amenities, contact, size, type} = req.body;
 
     const user = req.user;
 
@@ -16,12 +16,8 @@ const addProperty = asyncHandler(async(req,res)=>{
     }
     
     const VRImgLocalPath = req.files?.VRImage[0]?.path;
-    const imagesLocalPath = req.files?.images[0]?.path;
     
-    const VRImage = await uploadFileOnCloudinary(VRImgLocalPath);
-    const images = await uploadFileOnCloudinary(imagesLocalPath);
-
-    if(!VRImage){
+    if(!VRImgLocalPath){
         return res
         .status(400)
         .json(
@@ -29,11 +25,20 @@ const addProperty = asyncHandler(async(req,res)=>{
         );
     }
 
+    const VRImage = await uploadFileOnCloudinary(VRImgLocalPath);
+
+    if(!VRImage){
+        return res
+        .status(500)
+        .json(
+            new ApiError(500, "Something went wrong while uploading VRImage")
+        );
+    }
+
     const property = await Property.create({
         title, 
         description,
         location,
-        images: images.url,
         price,
         size,
         VRImage: VRImage.url,
@@ -53,7 +58,7 @@ const addProperty = asyncHandler(async(req,res)=>{
     }
 
     return res
-    .status(200)
+    .status(201)
     .json(
         new ApiResponse(201, property, "property is added!!")
     )

@@ -11,10 +11,6 @@ router.route("/add-property").post(
         {
             name: "VRImage",
             maxCount: 1
-        },
-        {
-            name: "images",
-            maxCount: 1
         }
     ]),
     addProperty)
