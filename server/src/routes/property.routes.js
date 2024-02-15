@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { createProperty, getProperties, getPropertyById, updatePropertyById, deletePropertyById } from "../controllers/property.controller.js";
+import { getPropertyById, updatePropertyById, deletePropertyById, addProperty, getAllProperty } from "../controllers/property.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-const router = Router();
+import { upload } from "../middlewares/multer.midlleware.js"
 
-router.use(verifyJWT);
+const router = Router()
 
-router.route("/create").post(
+router.route("/add-property").post(
+    verifyJWT,
     upload.fields([
         {
             name: "VRImage",
@@ -16,13 +17,13 @@ router.route("/create").post(
             maxCount: 1
         }
     ]),
-    createProperty)
+    addProperty)
 
-router.route("/getProperties").get(getProperties)
+router.route("/getAllProperties").get(getAllProperty)
 
-router.route("/getProperty").get(getPropertyById);
+router.route("/getProperty/:id").get(getPropertyById);
 
-router.route("/update").get(updatePropertyById);
+router.route("/update/:id").put(updatePropertyById);
 
 router.route("/delete").delete(deletePropertyById);
 

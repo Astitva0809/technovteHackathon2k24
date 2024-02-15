@@ -1,20 +1,21 @@
+
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import {uploadFileOnCloudinary} from '../utils/cloudinary.js';
 import { Property } from "../models/property.model.js";
 
-const createProperty = asyncHandler(async(req,res)=>{
+const addProperty = asyncHandler(async(req,res)=>{
     
-    const { title, description, location, price, bedrooms, bathrooms, area, amenities, contact, owner } = req.body;
+    const { title, description, location, price, area, amenities, contact, owner, size, type} = req.body;
 
-    const {user} = req;
+    const user = req.user;
 
-    if (!title || !description || !location || !amenities || !price || !bedrooms || !bathrooms || !area || !contact || !owner) {
+    if (!title || !description || !size || !location || !amenities || !price || !area || !contact || !type ) {
         return res.status(400).json(new ApiError(400, "All fields are required!!"));
     }
     
-    const VRImgLocalPath = req.files?.VRmage[0]?.path;
+    const VRImgLocalPath = req.files?.VRImage[0]?.path;
     const imagesLocalPath = req.files?.images[0]?.path;
     
     const VRImage = await uploadFileOnCloudinary(VRImgLocalPath);
@@ -31,17 +32,26 @@ const createProperty = asyncHandler(async(req,res)=>{
     const property = await Property.create({
         title, 
         description,
-        VRImage: VRImage.url,
-        price,
         location,
-        area,
-        bedrooms,
         images: images.url,
-        bathrooms,
+        price,
+        size,
+        VRImage: VRImage.url,
+        type,
+        area,
         amenities,
         contact,
         owner: user._id
     })
+
+    if(!property){
+        return res
+        .status(500)
+        .json(
+            new ApiError(500,"Something went wrong while creating the property")
+        )
+    }
+
     return res
     .status(200)
     .json(
@@ -49,7 +59,7 @@ const createProperty = asyncHandler(async(req,res)=>{
     )
 })
 
-const getProperties = asyncHandler(async(req,res)=>{
+const getAllProperty = asyncHandler(async(req,res)=>{
     const properties = await Property.find();
 
     if(!properties){
@@ -120,4 +130,4 @@ const deletePropertyById = asyncHandler(async(req,res)=>{
 })
 
 
-export {createProperty, getPropertyById, getProperties, updatePropertyById, deletePropertyById};
+export {addProperty, getPropertyById, getAllProperty, updatePropertyById, deletePropertyById};
