@@ -13,6 +13,9 @@ const propertySchema = new Schema({
     price: Number,
     bedrooms: Number,
     bathrooms: Number,
+    VRImage: {
+        type: String
+    },
     area: {
         type: Number, 
         required: true, 
