@@ -13,6 +13,6 @@ router.route("/login").post(logInUser)
 router.route("/logout").post(verifyJWT, logOutUser)
 
 //curentUser
-router.route("/user").post(verifyJWT,currentUser);
+router.route("/user").get(verifyJWT,currentUser);
 
 export default router;
