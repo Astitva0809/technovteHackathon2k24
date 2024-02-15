@@ -18,7 +18,9 @@ app.use(cors({
 
 //routers
 import userRouter from './routes/user.routes.js';
+import propertyRouter from './routes/property.routes.js';
 
-app.use('/api/v1/users',userRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/properties', propertyRouter);
 
 export { app, port };

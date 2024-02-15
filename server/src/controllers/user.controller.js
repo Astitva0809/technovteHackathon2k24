@@ -183,4 +183,16 @@ const logOutUser = asyncHandler(async(req, res)=>{
     .json(new ApiResponse(200, {}, "User logged Out!!"))
 })
 
-export {registerUser, logInUser, logOutUser};
+const currentUser = asyncHandler(async(req,res)=>{
+    try {
+        const userData = req.user;
+
+        return res.status(200)
+        .json(new ApiResponse(200, userData, "Current User Data!!"));
+
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+export {registerUser, logInUser, logOutUser, currentUser};
