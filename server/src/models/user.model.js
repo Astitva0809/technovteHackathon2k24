@@ -22,12 +22,6 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is required!!"],
   },
-  role: {
-    type: String,
-    enum: ['buyer', 'seller'], 
-    default: 'buyer', 
-    required: true,
-  },
   refreshToken: {
     type: String
   },
