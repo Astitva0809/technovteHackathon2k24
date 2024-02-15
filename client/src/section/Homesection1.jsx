@@ -1,14 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import video from '../assets/video1.mp4';
-
+import h2 from "../assets/h2.jpg"
 function Homesection1() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const trimDuration = 48; // Desired duration in seconds
+    const trimDuration = 48; 
 
     const handleVideoEnd = () => {
-      // Set video currentTime to 0 when it ends to loop from the start
       videoRef.current.currentTime = 0;
       // Play the video again
       videoRef.current.play();
@@ -30,7 +29,7 @@ function Homesection1() {
   return (
     <div className='relative bottom-[10vh] w-full'>
       <div className='z-[-1] w-full sm:h-[100vh] h-[65vh]'>
-        <video autoPlay loop id="expert-video" muted playsInline poster="https://storagecdn.propvr.ai/WebsiteAssets%2Fhero_video_thumbnail.webp?alt=media" className='w-full h-full object-cover' ref={videoRef}>
+        <video autoPlay loop id="expert-video" muted playsInline poster={h2} className='w-full h-full object-cover' ref={videoRef}>
           <source src={video} type="video/mp4" />
         </video>
         <div className='absolute sm:top-[20vh] top-8  flex a justify-center items-start md:pt-36 pt-20 w-full  font-playfair'>
