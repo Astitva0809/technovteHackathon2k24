@@ -1,10 +1,12 @@
 import React from 'react'
-import Card from './card';
+// import Card from './card';
+import logo from "../assets/icons8-price-30.png"
+import logo1 from "../assets/icons8-area-chart-30.png"
 
 function Tenantcard() {
   return (
     <div className="container mx-auto mt-8">
-      <div className="flex max-w-6xl flex-col items-center rounded-md border md:flex-row bg-white"> {/* Increased width */}
+      <div className="flex max-w-6xl flex-col items-center rounded-md border  border-black md:flex-row bg-white"> {/* Increased width */}
         <div className="h-full w-full md:h-[300px] md:w-[450px]">
           <img
             src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
@@ -16,7 +18,7 @@ function Tenantcard() {
           
         <div className="p-4">
         <h1 className="inline-flex items-center text-6x1 font-semibold">
-            $10000
+        <p style={{ fontSize: '1.5rem' }}>₹10000</p>
             </h1>
         </div>
          
@@ -29,10 +31,10 @@ function Tenantcard() {
 
               <div className="flex space-x-4">
               
-              <p className="flex items-center whitespace-nowrap"><strong>Plot Area:</strong>&nbsp;500 sq. ft.</p>
-              <p className="flex items-center whitespace-nowrap"><strong> Average Price:</strong>&nbsp;$100,000</p>
+              <p className="flex items-center whitespace-nowrap"><img src={logo1} alt="" /><strong>Plot Area:</strong>&nbsp;500 sq. ft.</p>
+              <p className="flex items-center whitespace-nowrap"><img src={logo} alt="" /><strong> Average Price:</strong>&nbsp;$100,000</p>
 
-              <p className="flex items-center whitespace-nowrap"><strong>Price:</strong>&nbsp;$120,000</p>
+              <p className="flex items-center whitespace-nowrap"><img src={logo} alt="" /><strong>Price:</strong>&nbsp;$120,000</p>
 
 
             
