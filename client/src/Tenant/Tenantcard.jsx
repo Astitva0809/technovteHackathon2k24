@@ -33,7 +33,7 @@ function Tenantcard() {
     </div>
     <div className="flex flex-col items-center md:w-1/3 w-full mt-4 md:mt-0">
       <img src={logo} alt="" />
-      <strong className="md:ml-2">Average Price:</strong>&nbsp;$100,000
+      <strong className="md:ml-6">Average Price:</strong>&nbsp;$100,000
     </div>
     <div className="flex flex-col items-center md:w-1/3 w-full mt-4 md:mt-0">
       <img src={logo} alt="" />
