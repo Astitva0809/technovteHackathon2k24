@@ -1,9 +1,8 @@
-
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
-import {uploadFileOnCloudinary} from '../utils/cloudinary.js';
 import { Property } from "../models/property.model.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const addProperty = asyncHandler(async(req,res)=>{
     
@@ -14,10 +13,22 @@ const addProperty = asyncHandler(async(req,res)=>{
     if (!title || !description || !size || !location || !amenities || !price || !area || !contact || !type ) {
         return res.status(400).json(new ApiError(400, "All fields are required!!"));
     }
+
+    const existedProperty = await Property.findOne({
+        $or: [{title}]
+    })
+
+    if(existedProperty){
+        return res
+        .status(400)
+        .json(
+            new ApiError(400,"Property already Existed!!" )
+        )
+    }
     
-    const VRImgLocalPath = req.files?.VRImage[0]?.path;
+    const VRImageLocalPath = req.files?.VRImage[0]?.path;
     
-    if(!VRImgLocalPath){
+    if(!VRImageLocalPath){
         return res
         .status(400)
         .json(
@@ -25,7 +36,7 @@ const addProperty = asyncHandler(async(req,res)=>{
         );
     }
 
-    const VRImage = await uploadFileOnCloudinary(VRImgLocalPath);
+    const VRImage = await uploadOnCloudinary(VRImageLocalPath);
 
     if(!VRImage){
         return res
@@ -130,7 +141,7 @@ const deletePropertyById = asyncHandler(async(req,res)=>{
     return res
     .status(200)
     .json(
-        new ApiResponse(200, property, 'Property deleted successfully!!')
+        new ApiResponse(200,'Property deleted successfully!!')
     );
 })
 

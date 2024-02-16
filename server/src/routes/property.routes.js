@@ -5,8 +5,9 @@ import { upload } from "../middlewares/multer.midlleware.js"
 
 const router = Router()
 
-router.route("/add-property").post(
-    verifyJWT,
+router.use(verifyJWT);
+
+router.route("/addProperty").post(
     upload.fields([
         {
             name: "VRImage",
@@ -21,6 +22,6 @@ router.route("/getProperty/:id").get(getPropertyById);
 
 router.route("/update/:id").put(updatePropertyById);
 
-router.route("/delete").delete(deletePropertyById);
+router.route("/delete/:id").delete(deletePropertyById);
 
 export default router;

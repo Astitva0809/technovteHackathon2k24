@@ -18,7 +18,7 @@ const propertySchema = new Schema({
         required: true
     },
     size: {
-        type: Number,
+        type: String,
         required: true
     },
     VRImage: {
