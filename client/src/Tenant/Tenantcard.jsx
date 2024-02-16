@@ -25,22 +25,24 @@ function Tenantcard() {
         <h2 className="text-lg font-semibold">
           Residential Plot
         </h2>
-        <div className="bg-gray-200 p-3 rounded-md mt-4 w-full">
+        <div className="bg-gray-200 p-3 rounded-md mt-4 max-w-screen-xl mx-auto">
   <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
-    <div className="flex items-center">
+    <div className="flex flex-col items-center md:w-1/3 w-full">
       <img src={logo1} alt="" />
       <strong className="md:ml-2">Plot Area:</strong>&nbsp;500 sq. ft.
     </div>
-    <div className="flex items-center">
+    <div className="flex flex-col items-center md:w-1/3 w-full mt-4 md:mt-0">
       <img src={logo} alt="" />
       <strong className="md:ml-2">Average Price:</strong>&nbsp;$100,000
     </div>
-    <div className="flex items-center">
+    <div className="flex flex-col items-center md:w-1/3 w-full mt-4 md:mt-0">
       <img src={logo} alt="" />
       <strong className="md:ml-2">Price:</strong>&nbsp;$120,000
     </div>
   </div>
 </div>
+
+
 
         <div className="mt-4">
           <p>Address :</p>
