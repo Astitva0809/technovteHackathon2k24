@@ -9,7 +9,7 @@ function Navbar() {
     };
 
     return (
-        <div className='bg-transparent sticky top-2 backdrop-blur-lg backdrop-brightness-75 z-50  mx-auto w-[95vw] rounded-xl'>
+        <div className='bg-transparent bg-primary sticky top-2 backdrop-blur-lg backdrop-brightness-75 z-50  mx-auto w-[95vw] rounded-xl'>
             <div className='h-[10vh] w-[95vw] mx-auto flex justify-between items-center p-4 font-playfair text-[17px]'>
                 <div><img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fc57725c-8ab0-43ad-a8c1-24eb43956f47?apiKey=0e2d2b3fdaa848b2ac6dc9f62f11a5f8" alt="Logo" /></div>
                 <div className='md:flex h-[10vh] justify-center items-center gap-12 hidden'>
